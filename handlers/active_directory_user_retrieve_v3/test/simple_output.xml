@@ -1,0 +1,15 @@
+<results>
+    <result name="Distinguished Name">CN=Daniel R Thompson,CN=Users,DC=kineticdata,DC=com</result>
+    <result name="First Name">Daniel</result>
+    <result name="Last Name">Thompson</result>
+    <result name="Full Name">Daniel R Thompson</result>
+    <result name="Initials">DRT</result>
+    <result name="Description">Contractor</result>
+    <result name="Office">A2 4th Floor</result>
+    <result name="Telephone">212-555-1212</result>
+    <result name="Email Address">dan.thompson@kineticdata.com</result>
+    <result name="User Logon">dthompson@kineticdata.com</result>
+    <result name="Title">Project Manager</result>
+    <result name="Department">Processing and Exchange</result>
+    <result name="Company">Kinetic Data</result>
+</results>

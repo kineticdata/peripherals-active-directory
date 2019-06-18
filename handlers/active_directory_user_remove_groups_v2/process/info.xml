@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+This file contains a list of all configurable values used by the task node.
+
+The name of the parameter is defined by applying the 'name' attribute to the
+info tag.  For example, to define a parameter named 'username' add the
+following line:
+  <info name="username" description="Remedy Login Name"></info>
+
+Default values may be defined by placing the value of the parameter
+within the info tags.  For example, to define a parameter named 'username'
+with a default value of 'Demo' add the following line:
+  <info name="username" description="Remedy Login Name">Demo</info>
+-->
+
+<taskInfo version="1.0">
+  <info name="host" description="The active directory server name or IP address."></info>
+  <info name="port" description="The active directory server port.  Defaults to '389'.">389</info>
+  <info name="base" description="A default LDAP treebase for User and Group queries against the host.  Example: 'DC=kineticdata,DC=com'."></info>
+  <info name="username" description="The distinguised name of the user that will interact with the active directory server.  Example: 'CN=Administrator,CN=Users,DC=kineticdata,DC=com'"></info>
+  <info name="password" type="encrypted" description="The password of the user that will be used to interact with the active directory server."></info>
+  <info name="enable_debug_logging" description="Enables debug logging if the value is set to 'Yes'.">No</info>
+</taskInfo>

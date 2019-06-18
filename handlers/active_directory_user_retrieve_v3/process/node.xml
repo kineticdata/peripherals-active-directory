@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<taskDefinition id="active_directory_user_retrieve" name="Active Directory User Retrieve" version="3" schema_version="1.0">
+    <author>support@kineticdata.com</author>
+    <description>
+        Finds a user in active directory by Distinguished Name, Full Name,
+        Email Address, or User Name and returns a predefined set of attributes
+        to include the Distinguished Name(dn).
+    </description>
+    <helpurl>http://ktc.kineticdata.com/handler/active_directory_user_retrieve/1</helpurl>
+    <visible>false</visible>
+    <deferrable>false</deferrable>
+    <parameters>
+        <parameter id="search_by" label="Search By" required="true"
+            menu="User Logon,Email Address,Distinguished Name,Full Name"
+            tooltip="Choose which attribute of the user to search by" />
+        <parameter id="search_value" label="Search Value" required="true"
+            tooltip="The actual search expression to search for" />
+    </parameters>
+    <handler name="active_directory_user_retrieve" version="3">
+        <infos>
+            <info name='host'>&lt;%=@info['host']%&gt;</info>
+            <info name='port'>&lt;%=@info['port']%&gt;</info>
+            <info name='base'>&lt;%=@info['base']%&gt;</info>
+            <info name='username'>&lt;%=@info['username']%&gt;</info>
+            <info name='password'>&lt;%=@info['password']%&gt;</info>
+            <!-- determines logging -->
+            <info name='enable_debug_logging'>&lt;%= @info['enable_debug_logging'] %&gt;</info>
+        </infos>
+        <parameters>
+            <parameter name="search_by" description="search by">&lt;%= @parameters['search_by'] %&gt;</parameter>
+            <parameter name="search_value" description="search value">&lt;%= @parameters['search_value'] %&gt;</parameter>
+        </parameters>
+    </handler>
+    <results format="xml">
+      <result name="Distinguished Name"/>
+      <result name="First Name"/>
+      <result name="Last Name"/>
+      <result name="Full Name"/>
+	  <result name="Manager DN"/>
+      <result name="Initials"/>
+      <result name="Description"/>
+      <result name="Office"/>
+      <result name="Telephone"/>
+      <result name="Email Address"/>
+      <result name="User Logon"/>
+	  <result name="User Principal Name"/>
+	  <result name="Account Enabled"/>
+      <result name="Title"/>
+      <result name="Department"/>
+      <result name="Company"/>
+    </results>
+</taskDefinition>

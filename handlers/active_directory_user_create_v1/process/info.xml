@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+This file contains a list of all configurable values used by the task node.
+
+The name of the parameter is defined by applying the 'name' attribute to the
+info tag.  For example, to define a parameter named 'username' add the
+following line:
+    <info name="username" description="The username used to login"></info>
+
+Default values may be defined by placing the value of the parameter
+within the info tags.  For example, to define a parameter named 'username'
+with a default value of 'User1' add the following line:
+    <info name="username">User1</info>
+-->
+
+<taskInfo version="1.0">
+  <info name="host" description="The active directory server name or IP address."></info>
+  <info name="port" description="The active directory server port.  Defaults to '389'.">389</info>
+  <info name="base" description="The distinguished name representing the base of the tree for this directory.  Example: 'DC=kineticdata,DC=com'."></info>
+  <info name="username" description="The Distinguised name of the user that will interact with the active directory server.  Example: 'CN=Administrator,CN=Users,DC=kineticdata,DC=com'"></info>
+  <info name="password" type="encrypted" description="The password of the user that will be used to interact wtih the active directory server."></info>
+  <info name="dn_format" description="Distinguished name format template.  See the handler README file for more information.">CN={displayname},CN=Users,{base}</info>
+  <info name="enable_debug_logging" description="Enables debug logging if the value is set to 'Yes'.">No</info>
+</taskInfo>

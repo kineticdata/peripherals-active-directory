@@ -1,0 +1,43 @@
+== Active Directory User Permanent Password
+Retrieves a user based on Distinguished Name, Full Name, User Logon, or Email
+Address and sets the password so it never expires.  This handler will fail if
+the user is not found, or if more than one result is found.
+
+For more information, see the Detailed Description section below.
+
+=== Parameters
+[Search By]
+    'Distinguished Name', 'Full Name', 'User Logon', or 'Email Address'
+[Search Value]
+    The value of the Distinguished Name, Full Name, User Logon, or Email
+    Address to search for
+
+==== Sample Configuration
+Search By::                             User Logon
+Search Value::                          <%=@answers['ReqFor Login ID']%>
+
+=== Results
+NA
+=== Detailed Description
+This handler will use the server information and user credentials configured in
+the task info values to authenticate and connect to the specified Active
+Directory server (using LDAP) and search for the user based on the
+search parameters provided.  If User Logon is the 'search by' parameter, the
+handler looks for a '@' symbol in the User Logon to determine how to search for
+the User Logon name.  A '@' symbol indicates a search for the LDAP attribute
+userPrincipalName (up to 100 characters) while the absence of the '@' symbol
+will result in a search for the LDAP attribute sAMAccountName(pre-Windows 2000).
+Finally, the flag is set so the password never expires.
+
+* If 'Distinguished Name' is selected, the 'distinguishedName' attribute will be
+  used directly to retrieve the User entry.
+* If 'Full Name' is selected, the 'cn' attribute will be used to retrieve the
+  User entry.
+* If 'User Name' is selected, the 'userprincipalname' value will be used if the
+  "Search Value" parameter includes an '@' sign (IE john.doe@domain.com) and the
+  'samaccountname' will be used if it does not (IE john.doe).
+* If 'Email Address' is selected, the 'mail' attribute will be used to retrieve
+  the User entry.
+
+This handler will fail if the user is not found, or if more than one
+result is found.
