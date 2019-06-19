@@ -1,0 +1,10 @@
+---
+repo-name: peripherals-active-directory
+categories:
+- Identity Management
+display-name: Active Directory
+manufacture: 
+product: 
+description: Manage users, computers, groups, and other objects in Active Directory
+  or another LDAP accessed directory service with these handlers.
+thumbnail: thumbnail.svg
