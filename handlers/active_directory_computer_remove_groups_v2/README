@@ -46,3 +46,7 @@ computer.
 
 This handler will raise an Exception if the specified User or any of the
 specified Groups are not found in the Active Directory system.
+
+=== Important Note
+This handler has been tested on Task 4.0.6 and should preform as expected on
+all Task 4.x.x versions.

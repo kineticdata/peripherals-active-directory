@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<taskDefinition id="active_directory_group_create" name="Active Directory Group Create" version="3" schema_version="1.0">
+    <author>support@kineticdata.com</author>
+    <description>
+        Creates an Active Directory group entry and uses the provided parameter
+        values to specify common attributes.  This handler will fail if the group
+        already exists.
+    </description>
+    <helpurl>
+        http://ktc.kineticdata.com/handler/active_directory_group_create/1
+    </helpurl>
+    <visible>false</visible>
+    <deferrable>false</deferrable>
+    <parameters>
+        <parameter id='name' label='Group Name' required='true'
+            tooltip='The name of the group to be created'/>
+        <parameter id='description' label='Description' required='false'
+            tooltip='The description of this group'/>
+        <parameter id='email' label='Email Address' required='false'
+            tooltip='The Email Address for this group.  Active Directory can be configured so that all members of a group are notified when the group receives an Email.'/>
+        <parameter id='scope' label='Group Scope' required='false' menu='Domain local,Global,Universal'
+            tooltip='Security groups or distribution groups are characterized by a scope that identifies how they are applied in the domain tree or forest. There are three group scopes: universal, global, and domain local.'>Global
+        </parameter>
+        <parameter id='type' label='Group Type' required='false' menu='Security,Distribution'
+            tooltip='There are two group types, security and distribution.  Security groups allow you to manage user and computer access to shared resources.  Distribution groups are intended to be used solely as email distribution lists.'>Security
+        </parameter>
+        <parameter id='info' required='false' label='Notes'
+            tooltip='Additional information about the group'/>
+    </parameters>
+    <handler name='active_directory_group_create' version='3'>
+        <infos>
+            <info name='host'>&lt;%=@info['host']%&gt;</info>
+            <info name='port'>&lt;%=@info['port']%&gt;</info>
+            <info name='base'>&lt;%=@info['base']%&gt;</info>
+            <info name='username'>&lt;%=@info['username']%&gt;</info>
+            <info name='password'>&lt;%=@info['password']%&gt;</info>
+            <info name='dn_format'>&lt;%=@info['dn_format']%&gt;</info>
+            <info name='enable_debug_logging'>&lt;%= @info['enable_debug_logging'] %&gt;</info>
+        </infos>
+        <parameters>
+            <parameter name='scope'>&lt;%= @parameters['scope'] %&gt;</parameter>
+            <parameter name='type'>&lt;%= @parameters['type'] %&gt;</parameter>
+        </parameters>
+        <attributes>
+            <attribute name="displayname">&lt;%= @parameters['name'] %&gt;</attribute>
+            <attribute name='name'>&lt;%= @parameters['name'] %&gt;</attribute>
+            <attribute name="mail">&lt;%= @parameters['email'] %&gt;</attribute>
+            <attribute name="description">&lt;%= @parameters['description'] %&gt;</attribute>
+            <attribute name="info">&lt;%= @parameters['info'] %&gt;</attribute>
+        </attributes>
+        <configurations>
+            <configuration name="objectclass">top,group</configuration>
+        </configurations>
+    </handler>
+    <results format='xml'>
+        <result name='Distinguished Name'/>
+    </results>
+</taskDefinition>
