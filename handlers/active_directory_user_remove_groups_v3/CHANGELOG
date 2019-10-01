@@ -1,0 +1,8 @@
+Active Directory User Remove Groups V1 (2011-01-25)
+* Initial version.  See README for details.
+
+Active Directory User Remove Groups V2 (2014-08-05)
+* Changed the password info value to be encrypted.
+
+Active Directory User Remove Groups V3 (2019-10-01)
+* Changed ldap lib version from 0.1.1 to 0.12.0.
