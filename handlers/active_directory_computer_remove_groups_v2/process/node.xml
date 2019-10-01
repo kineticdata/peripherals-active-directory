@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<taskDefinition id="active_directory_computer_remove_groups" name="Active Directory Computer Remove Groups" version="2" schema_version="1.3">
+    <author>support@kineticdata.com</author>
+    <description>
+        Finds a user in active directory by Distinguished Name (Computer Name) and adds the computer as a member to one or
+        more groups.
+    </description>
+    <helpurl>
+    </helpurl>
+    <visible>false</visible>
+    <deferrable>false</deferrable>
+    <parameters>
+         <parameter id="search_by" label="Search By" required="true"
+            tooltip="'Distinguished Name', 'Full Name', 'User Name', 'Computer Name', or 'Email Address'">Computer Name</parameter>
+        <parameter id="search_value" label="Search Value" required="true"
+            tooltip="The value of the Distinguished Name (Computer Name)." />
+        <parameter id="groups" label="Groups" required="true"
+            tooltip="The common name(s) of the group(s) to remove.  More than one group can be specified by separating each group with a comma." />
+    </parameters>
+    <handler name='active_directory_computer_remove_groups' version='2'>
+        <infos>
+            <!-- credentials to bind to the active directory server -->
+            <info name='host'>&lt;%=@info['host']%&gt;</info>
+            <info name='port'>&lt;%=@info['port']%&gt;</info>
+            <info name='base'>&lt;%=@info['base']%&gt;</info>
+            <info name='username'>&lt;%=@info['username']%&gt;</info>
+            <info name='password'>&lt;%=@info['password']%&gt;</info>
+            <!-- determines logging -->
+            <info name="enable_debug_logging">&lt;%= @info['enable_debug_logging'] %&gt;</info>
+        </infos>
+        <parameters>
+            <parameter name="search_by">&lt;%= @parameters['search_by'] %&gt;</parameter>
+            <parameter name="search_value">&lt;%= @parameters['search_value'] %&gt;</parameter>
+            <parameter name="groups">&lt;%=@parameters['groups'] %&gt;</parameter>
+        </parameters>
+    </handler>
+    <results format='xml'/>
+</taskDefinition>
