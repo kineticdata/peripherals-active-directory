@@ -1,0 +1,5 @@
+Active Directory User Create V1 (2011-01-14)
+* Initial version.  See README for details.
+
+Active Directory User Create V2 (2019-10-04)
+* Changed ldap lib version from 0.1.1 to 0.12.0.
