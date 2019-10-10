@@ -12,6 +12,9 @@
     <visible>false</visible>
     <deferrable>false</deferrable>
     <parameters>
+        <parameter id="error_handling" label="Error Handling" required="true"
+            tooltip="Determine what to return if an error is encountered."
+            menu="Error Message,Raise Error">Error Message</parameter>
         <parameter id='name' label='Group Name' required='true'
             tooltip='The name of the group to be created'/>
         <parameter id='description' label='Description' required='false'
@@ -38,6 +41,8 @@
             <info name='enable_debug_logging'>&lt;%= @info['enable_debug_logging'] %&gt;</info>
         </infos>
         <parameters>
+            <parameter name="error_handling">&lt;%= @parameters.has_key?("error_handling") ?
+                @parameters["error_handling"] : "Raise Error" %&gt;</parameter>
             <parameter name='scope'>&lt;%= @parameters['scope'] %&gt;</parameter>
             <parameter name='type'>&lt;%= @parameters['type'] %&gt;</parameter>
         </parameters>
@@ -53,6 +58,7 @@
         </configurations>
     </handler>
     <results format='xml'>
+        <result name="Handler Error Message"/>
         <result name='Distinguished Name'/>
     </results>
 </taskDefinition>

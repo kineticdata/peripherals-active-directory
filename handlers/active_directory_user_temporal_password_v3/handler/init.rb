@@ -56,6 +56,9 @@ class ActiveDirectoryUserTemporalPasswordV2
     }
     puts("Parameters: #{@parameters.inspect}") if @debug_logging_enabled
 
+    @error_handling  = @parameters["error_handling"]
+    @error_message = nil
+
     # If search by is User Name, determine if UPN suffix is present
     # Set the @search_by to the actual attribute name for the search filter
     if @parameters['search_by'] == "User Logon"
@@ -88,64 +91,85 @@ class ActiveDirectoryUserTemporalPasswordV2
   # ==== Returns
   # An Xml formatted String representing the return variable results.
   def execute()
-    # If we are successful in authenticating using the active directory
-    # server and credentials specified by the task info values.
-    if @ldap.bind
-      # Build a filter to search by
-      filter = Net::LDAP::Filter.eq( "objectclass", "organizationalPerson" )
-      # Add the search value (attribute) to the filter for the search
-      unless @parameters['search_value'].nil?
-        filter = filter & Net::LDAP::Filter.eq(@search_by, @parameters['search_value'])
-      end
+    
+    begin
 
-      # Search operation - return result is set to true so that an array is
-      # returned
-      user_entries = @ldap.search(
-        :base => @info_values['base'],
-        :filter => filter,
-        :size => 2,
-        :return_result => true
-      )
-
-      # Raise an exception if there was a problem with the call
-      unless @ldap.get_operation_result.code == 0
-        raise @ldap.get_operation_result.message
-      end
-
-      # Raise exception if search did not return 1 entry
-      if user_entries.length < 1
-        raise "User not found when searching by #{@search_by} for: #{@parameters['search_value']}"
-      elsif user_entries.length > 1
-        raise "Search matched more than one entry when searching by #{@search_by} for: #{@parameters['search_value']}"
-      end
-
-      # locate the user account control attribute
-      uac = user_entries[0].userAccountControl[0].to_i
-      # determine the status of the flag for logging
-      if @debug_logging_enabled
-        mask = 1 << 16
-        if mask & uac == 0
-          puts "Password was already set to expire"
-        else
-          puts "Password was previously set to permanent"
+      # If we are successful in authenticating using the active directory
+      # server and credentials specified by the task info values.
+      if @ldap.bind
+        # Build a filter to search by
+        filter = Net::LDAP::Filter.eq( "objectclass", "organizationalPerson" )
+        # Add the search value (attribute) to the filter for the search
+        unless @parameters['search_value'].nil?
+          filter = filter & Net::LDAP::Filter.eq(@search_by, @parameters['search_value'])
         end
+
+        # Search operation - return result is set to true so that an array is
+        # returned
+        user_entries = @ldap.search(
+          :base => @info_values['base'],
+          :filter => filter,
+          :size => 2,
+          :return_result => true
+        )
+
+        # Raise an exception if there was a problem with the call
+        unless @ldap.get_operation_result.code == 0
+          @error_message = "Message: #{@ldap.get_operation_result.message}, Error Code: "\
+						"#{@ldap.get_operation_result.code}"
+          raise "Message: #{@ldap.get_operation_result.message}, Error Code: "\
+            "#{@ldap.get_operation_result.code}" if @error_handling == "Raise Error"
+        end
+
+        # Raise exception if search did not return 1 entry
+        if user_entries.length < 1
+          @error_message = "User not found when searching by #{@search_by} "\
+            "for: #{@parameters['search_value']}" if @error_message.nil?
+          raise "User not found when searching by #{@search_by} for: "\
+            "#{@parameters['search_value']}" if @error_handling == "Raise Error"
+        elsif user_entries.length > 1
+          @error_message = "Search matched more than one entry when searching by #{@search_by} "\
+            "for: #{@parameters['search_value']}" if @error_message.nil?
+          raise "Search matched more than one entry when searching by #{@search_by} for: "\
+						"#{@parameters['search_value']}" if @error_handling == "Raise Error"
+        end
+
+        # locate the user account control attribute
+        uac = user_entries[0].userAccountControl[0].to_i
+        # determine the status of the flag for logging
+        if @debug_logging_enabled
+          mask = 1 << 16
+          if mask & uac == 0
+            puts "Password was already set to expire"
+          else
+            puts "Password was previously set to permanent"
+          end
+        end
+        # regardless of the status, unset the bit for 'password never expires'
+        # so that the password will expire
+        val = uac & ~0x10000
+        # set the attribute back which will enable the account
+        @ldap.replace_attribute(user_entries[0].dn, :useraccountcontrol, val.to_s)
+        # Raise an exception if there was a problem with the call
+        unless @ldap.get_operation_result.code == 0
+          raise @ldap.get_operation_result.message
+        end
+      else
+        # authentication failed
+        @error_message = "Directory authentication failed - #{@ldap.get_operation_result}"
+        raise "Directory authentication failed - #{@ldap.get_operation_result}" if @error_handling == "Raise Error"
       end
-      # regardless of the status, unset the bit for 'password never expires'
-      # so that the password will expire
-      val = uac & ~0x10000
-      # set the attribute back which will enable the account
-      @ldap.replace_attribute(user_entries[0].dn, :useraccountcontrol, val.to_s)
-      # Raise an exception if there was a problem with the call
-      unless @ldap.get_operation_result.code == 0
-        raise @ldap.get_operation_result.message
-      end
-    else
-      # authentication failed
-      raise "Directory authentication failed - #{@ldap.get_operation_result}"
+    rescue Exception => error
+      @error_message = error.inspect if @error_message.nil?
+      raise error if @error_handling == "Raise Error"
     end
 
     # Build, log, and return the results
-    results = '<results/>'
+    results = <<-RESULTS
+    <results>
+      <result name="Handler Error Message">#{escape(@error_message)}</result>
+    </results>
+    RESULTS
     puts("Results: \n#{results}") if @debug_logging_enabled
 	  return results
   end

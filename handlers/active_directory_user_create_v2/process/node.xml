@@ -9,6 +9,9 @@
     <visible>false</visible>
     <deferrable>false</deferrable>
     <parameters>
+        <parameter id="error_handling" label="Error Handling" required="true"
+            tooltip="Determine what to return if an error is encountered."
+            menu="Error Message,Raise Error">Error Message</parameter>
         <parameter id="user_logon" label="User Logon" required="true"
             tooltip="The user's logon id.  This value should be specified as a User Principal Name (UPN) using the format 'username@domain.com'.  By convention, the User Logon is typically set to the same value as the user's email addresses.  In older Active Directory implementations, the domain may be omitted and the User Logon may be provided using the format 'username'." />
         <parameter id="first_name" required="true" label="First Name"
@@ -45,6 +48,8 @@
             <info name='enable_debug_logging'>&lt;%= @info['enable_debug_logging'] %&gt;</info>
         </infos>
         <parameters>
+            <parameter name="error_handling">&lt;%= @parameters.has_key?("error_handling") ?
+                @parameters["error_handling"] : "Raise Error" %&gt;</parameter>
             <parameter name="user_logon">&lt;%= @parameters['user_logon'] %&gt;</parameter>
             <parameter name="activated">&lt;%= @parameters['activated'] %&gt;</parameter>
         </parameters>
@@ -65,6 +70,7 @@
         </configurations>
     </handler>
     <results format="xml">
+        <result name="Handler Error Message"/>
         <result name="Distinguished Name"></result>
     </results>
 </taskDefinition>

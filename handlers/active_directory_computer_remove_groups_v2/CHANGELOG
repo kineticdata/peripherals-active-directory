@@ -3,3 +3,6 @@ Active Directory Computer Remove Groups V1 (2017-Aug-29)
 
 Active Directory Computer Remove Groups V2 (2019-10-01)
 * Changed ldap lib version from 0.1.1 to 0.12.0.
+
+(2019-10-10)
+* Added Never Drop Never Fail

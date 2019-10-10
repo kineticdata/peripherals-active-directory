@@ -6,6 +6,8 @@ exists.
 For more information, see the Detailed Description section below.
 
 === Parameters
+[Error Handling] 
+    How to handle error conditions in the handler: raise the error, or return error message
 [Group Name]
   The name of the group to be created
 [Description]
@@ -33,6 +35,8 @@ Group Type::        Security
 Notes::             <%=@results['Notes']%>
 
 === Results
+Handler Error Message::     Error message if an error was encountered and 
+                            Error Handling is set to "Error Message".
 Distinguished Name::        CN=Accounting,CN=Users,DC=kineticdata,DC=com
 
 === Detailed Description

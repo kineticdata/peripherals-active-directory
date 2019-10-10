@@ -62,6 +62,9 @@ class ActiveDirectoryUserCreateV1
     }
     puts("Parameters: #{@parameters.inspect}") if @debug_logging_enabled
 
+    @error_handling  = @parameters["error_handling"]
+    @error_message = nil
+    
     # Store the user attributes specified in the node.xml as a hash attribute named @attributes.
     @attributes = {}
     REXML::XPath.each(@input_document, '/handler/attributes/attribute') { |node|
@@ -102,41 +105,53 @@ class ActiveDirectoryUserCreateV1
   # ==== Returns
   # An Xml formatted String representing the return variable results.
   def execute()
-    # If we are successful in authenticating using the active directory
-    # server and credentials specified by the task info values.
-    if @ldap.bind
-      # Create an entry for the specified distinguished name and add the
-      # specified attributes.  This will throw an error if an entry associated
-      # to the distinguished name already exists.
-      @ldap.add( :dn => @dn, :attributes => @attributes )
+    begin
 
-      # Raise an exception if there was a problem with the call
-      unless @ldap.get_operation_result.code == 0
-        raise "There was a problem creating an entry for #{@dn} :: #{@ldap.get_operation_result.message}"
-      end
+      # If we are successful in authenticating using the active directory
+      # server and credentials specified by the task info values.
+      if @ldap.bind
+        # Create an entry for the specified distinguished name and add the
+        # specified attributes.  This will throw an error if an entry associated
+        # to the distinguished name already exists.
+        @ldap.add( :dn => @dn, :attributes => @attributes )
 
-      # Enable the account if the "Activated" parameter is set to "Yes"
-      if @parameters['activated'] == "Yes"
-        # The useraccountcontrol attribute is a special attribute that takes
-        # a numerical representation of the control actions to execute.  The
-        # value of 544 indicates that the user is activated (as a normal
-        # account).
-        @ldap.replace_attribute @dn, :useraccountcontrol, '544'
-        # Raise exception if there was a problem with the call
+        # Raise an exception if there was a problem with the call
         unless @ldap.get_operation_result.code == 0
-          raise "There was a problem activating the user for #{@dn} :: #{@ldap.get_operation_result.message}"
+          @error_message = "Message: #{@ldap.get_operation_result.message}, Error Code: "\
+						"#{@ldap.get_operation_result.code}"
+          raise "Message: #{@ldap.get_operation_result.message}, Error Code: "\
+            "#{@ldap.get_operation_result.code}" if @error_handling == "Raise Error"
         end
-      end
 
-    # If authentication failed
-    else
-      # Raise an exception
-      raise "Directory authentication failed"
+        # Enable the account if the "Activated" parameter is set to "Yes"
+        if @parameters['activated'] == "Yes"
+          # The useraccountcontrol attribute is a special attribute that takes
+          # a numerical representation of the control actions to execute.  The
+          # value of 544 indicates that the user is activated (as a normal
+          # account).
+          @ldap.replace_attribute @dn, :useraccountcontrol, '544'
+          # Raise exception if there was a problem with the call
+          unless @ldap.get_operation_result.code == 0
+            @error_message = "There was a problem activating the user for #{@dn} :: "\
+						  "#{@ldap.get_operation_result.message}"
+            raise "There was a problem activating the user for #{@dn} :: "\
+						  "#{@ldap.get_operation_result.message}" if @error_handling == "Raise Error"
+          end
+        end
+      else
+        # authentication failed
+        @error_message = "Directory authentication failed - #{@ldap.get_operation_result}"
+        raise "Directory authentication failed - #{@ldap.get_operation_result}" if @error_handling == "Raise Error"
+      end
+    rescue Exception => error
+      @error_message = error.inspect if @error_message.nil?
+      raise error if @error_handling == "Raise Error"
     end
 
     # Return the results if we got this far (just the distinguished name)
     results = <<-RESULTS
     <results>
+      <result name="Handler Error Message">#{escape(@error_message)}</result>
       <result name="Distinguished Name">#{@dn}</result>
     </results>
     RESULTS

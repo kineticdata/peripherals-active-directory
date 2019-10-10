@@ -4,6 +4,8 @@ and changes the specified LDAP attribute.
 
 
 === Parameters
+[Error Handling] 
+    How to handle error conditions in the handler: raise the error, or return error message
 [Search By]
     'Distinguished Name', 'Full Name', 'User Logon', or 'Email Address'
 [Search Value]
@@ -17,7 +19,8 @@ LDAP attribute::                        mobile
 New attribute value::                   555-555-5555
 
 === Results
-NA
+Handler Error Message::     Error message if an error was encountered and 
+                            Error Handling is set to "Error Message".
 
 === Detailed Description
 This handler will use the server information and user credentials configured in

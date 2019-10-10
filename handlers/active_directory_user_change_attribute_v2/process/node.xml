@@ -10,6 +10,9 @@
     <visible>false</visible>
     <deferrable>false</deferrable>
     <parameters>
+        <parameter id="error_handling" label="Error Handling" required="true"
+            tooltip="Determine what to return if an error is encountered."
+            menu="Error Message,Raise Error">Error Message</parameter>
         <parameter id="search_by" label="Search By" required="true"
             menu="User Logon,Email Address,Distinguished Name,Full Name"
             tooltip="Choose which attribute of the user to search by" />
@@ -31,11 +34,15 @@
             <info name='enable_debug_logging'>&lt;%= @info['enable_debug_logging'] %&gt;</info>
         </infos>
         <parameters>
+            <parameter name="error_handling">&lt;%= @parameters.has_key?("error_handling") ?
+                @parameters["error_handling"] : "Raise Error" %&gt;</parameter>
             <parameter name="search_by" description="search by">&lt;%= @parameters['search_by'] %&gt;</parameter>
             <parameter name="search_value" description="search value">&lt;%= @parameters['search_value'] %&gt;</parameter>
 			<parameter name="ldap_attribute" description="ldap attribute">&lt;%= @parameters['ldap_attribute'] %&gt;</parameter>
 			<parameter name="new_value" description="new phone">&lt;%= @parameters['new_value'] %&gt;</parameter>
         </parameters>
     </handler>
-    <results format="xml"/>
+    <results format="xml">
+        <result name="Handler Error Message"/>
+    </results>
 </taskDefinition>

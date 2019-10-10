@@ -71,6 +71,9 @@ class ActiveDirectoryGroupCreateV3
     }
     puts("Parameters: #{@parameters.inspect}") if @debug_logging_enabled
 
+    @error_handling  = @parameters["error_handling"]
+    @error_message = nil
+
     # Store the user attributes specified in the node.xml as a hash attribute
     # named @attributes.
     @attributes = {}
@@ -103,26 +106,35 @@ class ActiveDirectoryGroupCreateV3
   # ==== Returns
   # An Xml formatted String representing the return variable results.
   def execute()
-    # If we are successful in authenticating using the active directory
-    # server and credentials specified by the task info values.
-    if @ldap.bind
-      # Create an entry for the specified distinguished name and add the
-      # specified attributes.  This will throw an error if an entry associated
-      # to the distinguished name already exists.
-      @ldap.add( :dn => @dn, :attributes => @attributes )
-      # Raise an exception if there was a problem with the call
-      unless @ldap.get_operation_result.code == 0
-        raise "Problem creating #{@attributes['name']} :: #{@ldap.get_operation_result.message}"
+    begin
+
+      # If we are successful in authenticating using the active directory
+      # server and credentials specified by the task info values.
+      if @ldap.bind
+        # Create an entry for the specified distinguished name and add the
+        # specified attributes.  This will throw an error if an entry associated
+        # to the distinguished name already exists.
+        @ldap.add( :dn => @dn, :attributes => @attributes )
+        # Raise an exception if there was a problem with the call
+        unless @ldap.get_operation_result.code == 0
+          @error_message = "Problem creating #{@attributes['name']} :: #{@ldap.get_operation_result.message}"
+          raise "Problem creating #{@attributes['name']} :: "\
+						"#{@ldap.get_operation_result.message}" if @error_handling == "Raise Error"
+        end
+      else
+        # authentication failed
+        @error_message = "Directory authentication failed - #{@ldap.get_operation_result}"
+        raise "Directory authentication failed - #{@ldap.get_operation_result}" if @error_handling == "Raise Error"
       end
-      # If authentication failed
-    else
-      # raise exception
-      raise "Directory authentication failed"
+    rescue Exception => error
+      @error_message = error.inspect if @error_message.nil?
+      raise error if @error_handling == "Raise Error"
     end
 
     # Return the results (Distinguished Name)
     results = <<-RESULTS
     <results>
+      <result name="Handler Error Message">#{escape(@error_message)}</result>
       <result name="Distinguished Name">#{@dn}</result>
     </results>
     RESULTS
