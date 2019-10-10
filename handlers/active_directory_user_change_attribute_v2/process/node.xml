@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<taskDefinition id="active_directory_user_change_attribute"
+    name="Active Directory User Change Attribute" version="1" schema_version="1.0">
+    <author>support@kineticdata.com</author>
+    <description>
+        Finds a user in active directory by Distinguished Name, Full Name,
+        Email Address, or User Name and changes the specified LDAP attribute.
+    </description>
+    <helpurl>http://ktc.kineticdata.com/handler/active_directory_user_change_attribute/1</helpurl>
+    <visible>false</visible>
+    <deferrable>false</deferrable>
+    <parameters>
+        <parameter id="error_handling" label="Error Handling" required="true"
+            tooltip="Determine what to return if an error is encountered."
+            menu="Error Message,Raise Error">Error Message</parameter>
+        <parameter id="search_by" label="Search By" required="true"
+            menu="User Logon,Email Address,Distinguished Name,Full Name"
+            tooltip="Choose which attribute of the user to search by" />
+        <parameter id="search_value" label="Search Value" required="true"
+            tooltip="The actual search expression to search for" />
+        <parameter id="ldap_attribute" label="LDAP attribute" required="true"
+            tooltip="The LDAP attribute to change for the specified user" />
+        <parameter id="new_value" label="New attribute value" required="true"
+            tooltip="The new value the specified user will get for the LDAP Attribute parameter" />
+    </parameters>
+    <handler name="active_directory_user_change_attribute" version="1">
+        <infos>
+            <info name='host'>&lt;%=@info['host']%&gt;</info>
+            <info name='port'>&lt;%=@info['port']%&gt;</info>
+            <info name='base'>&lt;%=@info['base']%&gt;</info>
+            <info name='username'>&lt;%=@info['username']%&gt;</info>
+            <info name='password'>&lt;%=@info['password']%&gt;</info>
+            <!-- determines logging -->
+            <info name='enable_debug_logging'>&lt;%= @info['enable_debug_logging'] %&gt;</info>
+        </infos>
+        <parameters>
+            <parameter name="error_handling">&lt;%= @parameters.has_key?("error_handling") ?
+                @parameters["error_handling"] : "Raise Error" %&gt;</parameter>
+            <parameter name="search_by" description="search by">&lt;%= @parameters['search_by'] %&gt;</parameter>
+            <parameter name="search_value" description="search value">&lt;%= @parameters['search_value'] %&gt;</parameter>
+			<parameter name="ldap_attribute" description="ldap attribute">&lt;%= @parameters['ldap_attribute'] %&gt;</parameter>
+			<parameter name="new_value" description="new phone">&lt;%= @parameters['new_value'] %&gt;</parameter>
+        </parameters>
+    </handler>
+    <results format="xml">
+        <result name="Handler Error Message"/>
+    </results>
+</taskDefinition>
