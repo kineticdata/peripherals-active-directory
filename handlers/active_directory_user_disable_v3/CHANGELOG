@@ -1,0 +1,11 @@
+Active Directory User Disable V1 (2011-02-04)
+* Initial version.  See README for details.
+
+Active Directory User Disable V2 (2014-08-05)
+* Changed the password info value to be encrypted.
+
+Active Directory User Disable V3 (2019-10-04)
+* Changed ldap lib version from 0.1.1 to 0.12.0.
+
+(2019-10-10)
+* Added Never Drop Never Fail

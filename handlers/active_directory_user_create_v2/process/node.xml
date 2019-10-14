@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<taskDefinition id="active_directory_user_create" name="Active Directory User Create" version="1" schema_version="1.0">
+    <author>support@kineticdata.com</author>
+    <description>
+        Creates an Active Directory user entry and uses the provided parameter
+        values to specify common user attributes.
+    </description>
+    <helpurl>http://ktc.kineticdata.com/handler/active_directory_user_create/1</helpurl>
+    <visible>false</visible>
+    <deferrable>false</deferrable>
+    <parameters>
+        <parameter id="error_handling" label="Error Handling" required="true"
+            tooltip="Determine what to return if an error is encountered."
+            menu="Error Message,Raise Error">Error Message</parameter>
+        <parameter id="user_logon" label="User Logon" required="true"
+            tooltip="The user's logon id.  This value should be specified as a User Principal Name (UPN) using the format 'username@domain.com'.  By convention, the User Logon is typically set to the same value as the user's email addresses.  In older Active Directory implementations, the domain may be omitted and the User Logon may be provided using the format 'username'." />
+        <parameter id="first_name" required="true" label="First Name"
+            tooltip="The first name of the user." />
+        <parameter id="last_name" required="true" label="Last Name"
+            tooltip="The last name of the user." />
+        <parameter id="full_name" required="true" label="Full Name"
+            tooltip="The full name of the user.  In most Active Directory implementations, this value must be unique." />
+        <parameter id="description" required="false" label="Description"
+            tooltip="The description of the user.  This value is displayed within the Active Directory user list and is often used to describe the role or purpose of a user account." />
+        <parameter id="office" required="false" label="Office"
+            tooltip="A string representing the location of the user's office.  This could be a building name or number, floor, room or cube number, or any combination of values." />
+        <parameter id="telephone" required="false" label="Telephone"
+            tooltip="The primary telephone number of the user." />
+        <parameter id="email" required="false" label="Email"
+            tooltip="The email address of the user." />
+        <parameter id="title" required="false" label="Title"
+            tooltip="The user's job title." />
+        <parameter id="department" required="false" label="Department"
+            tooltip="The primary department that the user is a member of." />
+        <parameter id="company" required="false" label="Company"
+            tooltip="The name of the company that the user is employed by." />
+        <parameter id="activated" required="false" label="Activated" menu="Yes,No"
+            tooltip="Indicates whether or not the the user's account should be activated upon creation." />
+    </parameters>
+    <handler name="active_directory_user_create" version="1">
+        <infos>
+            <info name='host'>&lt;%=@info['host']%&gt;</info>
+            <info name='port'>&lt;%=@info['port']%&gt;</info>
+            <info name='base'>&lt;%=@info['base']%&gt;</info>
+            <info name='username'>&lt;%=@info['username']%&gt;</info>
+            <info name='password'>&lt;%=@info['password']%&gt;</info>
+            <info name='dn_format'>&lt;%=@info['dn_format']%&gt;</info>
+            <info name='enable_debug_logging'>&lt;%= @info['enable_debug_logging'] %&gt;</info>
+        </infos>
+        <parameters>
+            <parameter name="error_handling">&lt;%= @parameters.has_key?("error_handling") ?
+                @parameters["error_handling"] : "Raise Error" %&gt;</parameter>
+            <parameter name="user_logon">&lt;%= @parameters['user_logon'] %&gt;</parameter>
+            <parameter name="activated">&lt;%= @parameters['activated'] %&gt;</parameter>
+        </parameters>
+        <attributes>
+            <attribute name="sn">&lt;%= @parameters['last_name'] %&gt;</attribute>
+            <attribute name="displayname">&lt;%= @parameters['full_name'] %&gt;</attribute>
+            <attribute name="description">&lt;%= @parameters['description'] %&gt;</attribute>
+            <attribute name="telephonenumber">&lt;%= @parameters['telephone'] %&gt;</attribute>
+            <attribute name="mail">&lt;%= @parameters['email'] %&gt;</attribute>
+            <attribute name="givenname">&lt;%= @parameters['first_name'] %&gt;</attribute>
+            <attribute name="company">&lt;%= @parameters['company'] %&gt;</attribute>
+            <attribute name="department">&lt;%= @parameters['department'] %&gt;</attribute>
+            <attribute name="physicaldeliveryofficename">&lt;%= @parameters['office'] %&gt;</attribute>
+            <attribute name="title">&lt;%= @parameters['title'] %&gt;</attribute>
+        </attributes>
+        <configurations>
+            <configuration name="objectclass">top,person,organizationalPerson,user</configuration>
+        </configurations>
+    </handler>
+    <results format="xml">
+        <result name="Handler Error Message"/>
+        <result name="Distinguished Name"></result>
+    </results>
+</taskDefinition>

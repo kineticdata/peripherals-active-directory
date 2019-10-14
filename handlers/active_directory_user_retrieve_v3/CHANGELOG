@@ -6,3 +6,6 @@ Active Directory User Retrieve V2 (2014-08-05)
 
 Active Directory User Retrieve V3 (2015-08-03)
 * Added ability to check if account is enabled or disabled.
+
+Active Directory User Retrieve V3 (9-26-19)
+* Added wrapper to dependencies file for Task 4 check.

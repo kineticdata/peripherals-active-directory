@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<taskDefinition id="active_directory_distributionlist_members_retrieve" name="Active Directory Distribution List Member Retrieve" version="1" schema_version="1.0">
+    <author>support@kineticdata.com</author>
+    <description>
+        Finds a Distribution List in active directory by Distinguished Name, or Email Address and returns a comma delimited list of immediate members (e-mail addresses)
+    </description>
+    <helpurl/>
+    <visible>false</visible>
+    <deferrable>false</deferrable>
+    <parameters>
+        <parameter id="error_handling" label="Error Handling" required="true"
+            tooltip="Determine what to return if an error is encountered."
+            menu="Error Message,Raise Error">Error Message</parameter>
+        <parameter id="search_by" label="Search By" required="true"
+            menu="Email Address,Distinguished Name"
+            tooltip="Choose which attribute of the user to search by" />
+        <parameter id="search_value" label="Search Value" required="true"
+            tooltip="The actual search expression to search for" />
+    </parameters>
+    <handler name="active_directory_distributionlist_members_retrieve" version="1">
+        <infos>
+            <info name='host'>&lt;%=@info['host']%&gt;</info>
+            <info name='port'>&lt;%=@info['port']%&gt;</info>
+            <info name='base'>&lt;%=@info['base']%&gt;</info>
+            <info name='username'>&lt;%=@info['username']%&gt;</info>
+            <info name='password'>&lt;%=@info['password']%&gt;</info>
+            <!-- determines logging -->
+            <info name='enable_debug_logging'>&lt;%= @info['enable_debug_logging'] %&gt;</info>
+        </infos>
+        <parameters>
+            <parameter name="error_handling">&lt;%= @parameters.has_key?("error_handling") ?
+                @parameters["error_handling"] : "Raise Error" %&gt;</parameter>
+            <parameter name="search_by" description="search by">&lt;%= @parameters['search_by'] %&gt;</parameter>
+            <parameter name="search_value" description="search value">&lt;%= @parameters['search_value'] %&gt;</parameter>
+        </parameters>
+    </handler>
+    <results format="xml">
+        <result name="Email Addresses"/>
+        <result name="Handler Error Message"/>
+    </results>
+</taskDefinition>
