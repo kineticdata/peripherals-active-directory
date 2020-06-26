@@ -1,7 +1,7 @@
 # Add the dependencies file to require vendor libs
 require File.expand_path(File.join(File.dirname(__FILE__), 'dependencies'))
 
-class ActiveDirectoryUserPermanentPasswordV2
+class ActiveDirectoryUserPermanentPasswordV3
   # Load the LDAP bind information, build Hash objects for necessary values,
   # and validate the present state.  This method sets the following instance
   # variables:
