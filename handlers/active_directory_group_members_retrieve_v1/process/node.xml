@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<taskDefinition id="active_directory_group_members_retrieve" name="Active Directory Group Members Retrieve" version="1" schema_version="1.0">
+    <author>support@kineticdata.com</author>
+    <description>
+        Finds a group in Active Directory by distinguishedName and returns a comma delimited list of direct members and nested members if desired.
+    </description>
+    <helpurl/>
+    <visible>false</visible>
+    <deferrable>true</deferrable>
+    <parameters>
+        <parameter id="error_handling" label="Error Handling" required="true"
+            tooltip="Determine what to return if an error is encountered."
+            menu="Error Message,Raise Error">Error Message</parameter>
+        <parameter id="search_value" label="Group Name" required="true"
+            tooltip="The AD Group Name to search." />
+		<parameter id="include_nested_groups" label="Include Nested Groups" required="true"
+            tooltip="Include members of nested groups?"
+			menu="true, false">false</parameter>
+		<parameter id="user_attribute" label="User Attribute To Return" required="true"
+            tooltip="AD User attribute to return.  Only 1 allowed. Example: samaccountname" />			
+    </parameters>
+    <handler name="active_directory_group_members_retrieve" version="1">
+        <infos>
+            <info name='host'>&lt;%=@info['host']%&gt;</info>
+            <info name='port'>&lt;%=@info['port']%&gt;</info>
+            <info name='base'>&lt;%=@info['base']%&gt;</info>
+            <info name='username'>&lt;%=@info['username']%&gt;</info>
+            <info name='password'>&lt;%=@info['password']%&gt;</info>
+            <!-- determines logging -->
+            <info name='enable_debug_logging'>&lt;%= @info['enable_debug_logging'] %&gt;</info>
+        </infos>
+        <parameters>
+            <parameter name="error_handling">&lt;%= @parameters.has_key?("error_handling") ?
+                @parameters["error_handling"] : "Raise Error" %&gt;</parameter>
+            <parameter name="search_value" description="search value">&lt;%= @parameters['search_value'] %&gt;</parameter>
+			<parameter name="include_nested_groups" description="include_nested_groups">&lt;%= @parameters['include_nested_groups'] %&gt;</parameter>
+			<parameter name="user_attribute" description="user_attribute">&lt;%= @parameters['user_attribute'] %&gt;</parameter>
+        </parameters>
+    </handler>
+    <results format="xml">
+        <result name="Group Member User List"/>
+        <result name="Handler Error Message"/>
+    </results>
+</taskDefinition>

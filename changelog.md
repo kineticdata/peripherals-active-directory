@@ -81,3 +81,6 @@ Active Directory \[handlers\] (2019-06-26)
     * PER-191 update version number in node.xml/init.rb
   \[active-directory-user-retrieve-v4\]
     * PER-191 update version number in node.xml/init.rb
+  \[active_directory_group_members_retrieve_v1\]
+    * Initial create
+	
