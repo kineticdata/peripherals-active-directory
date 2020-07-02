@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<taskDefinition id="active_directory_user_create" name="Active Directory User Create" version="1" schema_version="1.0">
+<taskDefinition id="active_directory_user_create" name="Active Directory User Create" version="2" schema_version="1.0">
     <author>support@kineticdata.com</author>
     <description>
         Creates an Active Directory user entry and uses the provided parameter
@@ -37,7 +37,7 @@
         <parameter id="activated" required="false" label="Activated" menu="Yes,No"
             tooltip="Indicates whether or not the the user's account should be activated upon creation." />
     </parameters>
-    <handler name="active_directory_user_create" version="1">
+    <handler name="active_directory_user_create" version="2">
         <infos>
             <info name='host'>&lt;%=@info['host']%&gt;</info>
             <info name='port'>&lt;%=@info['port']%&gt;</info>

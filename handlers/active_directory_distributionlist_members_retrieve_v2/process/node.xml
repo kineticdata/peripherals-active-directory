@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<taskDefinition id="active_directory_distributionlist_members_retrieve" name="Active Directory Distribution List Member Retrieve" version="1" schema_version="1.0">
+<taskDefinition id="active_directory_distributionlist_members_retrieve" name="Active Directory Distribution List Member Retrieve" version="2" schema_version="1.0">
     <author>support@kineticdata.com</author>
     <description>
         Finds a Distribution List in active directory by Distinguished Name, or Email Address and returns a comma delimited list of immediate members (e-mail addresses)
@@ -17,7 +17,7 @@
         <parameter id="search_value" label="Search Value" required="true"
             tooltip="The actual search expression to search for" />
     </parameters>
-    <handler name="active_directory_distributionlist_members_retrieve" version="1">
+    <handler name="active_directory_distributionlist_members_retrieve" version="2">
         <infos>
             <info name='host'>&lt;%=@info['host']%&gt;</info>
             <info name='port'>&lt;%=@info['port']%&gt;</info>

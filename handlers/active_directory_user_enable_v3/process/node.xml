@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<taskDefinition id="active_directory_user_enable" name="Active Directory User Enable" version="2" schema_version="1.0">
+<taskDefinition id="active_directory_user_enable" 
+    name="Active Directory User Enable" version="3" schema_version="1.0">
     <author>support@kineticdata.com</author>
     <description>
         Finds a user in active directory by Distinguished Name, Full Name,
@@ -18,7 +19,7 @@
         <parameter id="search_value" label="Search Value" required="true"
             tooltip="The actual search expression to search for" />
     </parameters>
-    <handler name="active_directory_user_enable" version="2">
+    <handler name="active_directory_user_enable" version="3">
         <infos>
             <info name='host'>&lt;%=@info['host']%&gt;</info>
             <info name='port'>&lt;%=@info['port']%&gt;</info>

@@ -47,17 +47,40 @@ Active Directory \[handlers\] (2019-10-10)
     * PER-170 Handler added.  Added NDNF
   \[active-directory-user-disable-v3\]
     * PER-170 Handler added.  Added NDNF
-  \[active-directory-user-enable-v2\]
+  \[active-directory-user-enable-v3\]
     * PER-170 Handler added.  Added NDNF
   \[active-directory-user-create-v2\]
     * PER-170 Handler added.  Added NDNF
-  \[active-directory-user-expire-password-v2\]
+  \[active-directory-user-expire-password-v3\]
     * PER-170 Handler added.  Added NDNF
-  \[active-directory-user-temporal-password-v2\]
+  \[active-directory-user-temporal-password-v3\]
     * PER-170 Handler added.  Added NDNF
-  \[active-directory-user-permanent-password-v2\]
+  \[active-directory-user-permanent-password-v3\]
     * PER-170 Handler added.  Added NDNF
   \[active-directory-distributionlist-members-retrieve-v2\]
     * PER-170 Handler added.  Added NDNF
   \[active-directory-user-retrieve-v4\]
     * PER-170 Handler added.  Added NDNF
+
+Active Directory \[handlers\] (2019-06-26)
+  \[active-directory-user-change-attribute-v2\]
+    * PER-191 update version number in node.xml/init.rb
+  \[active-directory-user-disable-v3\]
+    * PER-191 update version number in node.xml/init.rb
+  \[active-directory-user-enable-v3\]
+    * PER-191 update version number in node.xml/init.rb
+  \[active-directory-user-create-v2\]
+    * PER-191 update version number in node.xml/init.rb
+  \[active-directory-user-expire-password-v3\]
+    * PER-191 update version number in node.xml/init.rb
+  \[active-directory-user-temporal-password-v3\]
+    * PER-191 update version number in node.xml/init.rb
+  \[active-directory-user-permanent-password-v3\]
+    * PER-191 update version number in node.xml/init.rb
+  \[active-directory-distributionlist-members-retrieve-v2\]
+    * PER-191 update version number in node.xml/init.rb
+  \[active-directory-user-retrieve-v4\]
+    * PER-191 update version number in node.xml/init.rb
+  \[active_directory_group_members_retrieve_v1\]
+    * Initial create
+	

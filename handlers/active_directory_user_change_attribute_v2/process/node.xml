@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <taskDefinition id="active_directory_user_change_attribute"
-    name="Active Directory User Change Attribute" version="1" schema_version="1.0">
+    name="Active Directory User Change Attribute" version="2" schema_version="1.0">
     <author>support@kineticdata.com</author>
     <description>
         Finds a user in active directory by Distinguished Name, Full Name,
@@ -23,7 +23,7 @@
         <parameter id="new_value" label="New attribute value" required="true"
             tooltip="The new value the specified user will get for the LDAP Attribute parameter" />
     </parameters>
-    <handler name="active_directory_user_change_attribute" version="1">
+    <handler name="active_directory_user_change_attribute" version="2">
         <infos>
             <info name='host'>&lt;%=@info['host']%&gt;</info>
             <info name='port'>&lt;%=@info['port']%&gt;</info>

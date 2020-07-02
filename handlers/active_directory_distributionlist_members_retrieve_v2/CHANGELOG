@@ -6,3 +6,6 @@ Active Directory Distribution List Member Retrieve V2 (2019-10-07)
 
 (2019-10-10)
 * Added Never Drop Never Fail
+
+(2020-06-26)
+* updated version number in node.xml and init.rb

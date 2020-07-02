@@ -1,7 +1,7 @@
 # Require the dependencies file to load the vendor libraries
 require File.expand_path(File.join(File.dirname(__FILE__), 'dependencies'))
 
-class ActiveDirectoryUserCreateV1
+class ActiveDirectoryUserCreateV2
   # Prepare for execution by building Hash objects for necessary data and
   # configuration values, and validating the present state.  This method
   # sets the following instance variables:
