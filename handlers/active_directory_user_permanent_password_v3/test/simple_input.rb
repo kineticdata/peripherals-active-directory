@@ -4,8 +4,8 @@
     'username' => "",
     'password' => "",
     'tls' => "True",
-    'port' => "",
-    'base' => "DC=kineticdata,DC=com",
+    'port' => "636",
+    'base' => "",
     'enable_debug_logging' => "Yes"
   },
   'parameters' => {
