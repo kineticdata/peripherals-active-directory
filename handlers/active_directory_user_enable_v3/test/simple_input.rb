@@ -1,14 +1,16 @@
 {
   'info' => {
-    'host'     => "",
+    'host' => "",
     'username' => "",
     'password' => "",
-    'port'     => "389",
-    'base'     => "",
+    'tls' => "True",
+    'port' => "636",
+    'base' => "",
     'enable_debug_logging' => "Yes"
   },
   'parameters' => {
-    'search_by'    => "",
-    'search_value' => ""
+    'error_handling' => "Raise Error",
+    'search_by'    => "Full Name",
+    'search_value' => "KTE Test User"
   }
 }

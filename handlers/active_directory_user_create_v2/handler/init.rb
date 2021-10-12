@@ -43,16 +43,8 @@ class ActiveDirectoryUserCreateV2
       puts("Using #{@info_values['dn_format']} for the 'User' distinguished name template.")
     end
 
-    # Initialize the LDAP object that will be used to interact with the active
-    # directory server.
     @ldap = Net::LDAP.new(
-      :host => @info_values['host'],
-      :port => @info_values['port'],
-      :auth => {
-        :method => :simple,
-        :username => @info_values['username'],
-        :password => @info_values['password']
-      }
+      get_ldap_config()
     )
 
     # Store the parameters specified in the node.xml as a hash attribute named @parameters.
@@ -258,5 +250,32 @@ class ActiveDirectoryUserCreateV2
       # name matching the string between the innermost left and right braces.
       $1 == "\\{" ? "{" : template_variables[$2]
     end
+  end
+
+  def get_ldap_config () 
+    # Determine if TLS should be applied.
+    is_tls = @info_values['tls'] && @info_values['tls'] == 'True' ? true : false
+
+    puts "TLS is #{is_tls ? 'enabled' : 'disabled'}, making connection on port #{@info_values['port']}" if @debug_logging_enabled
+
+    # Initialize the Net::LDAP object with the credentials - have to use
+    # encryption since we are sending a password.
+    ldap_config = {
+      :host => @info_values['host'],
+      :port => @info_values['port'],
+      :auth => {
+        :method => :simple,
+        :username => @info_values['username'],
+        :password => @info_values['password']
+      }
+    }.merge( is_tls ?  
+      # When TLS is set to true apply encryption to the connection.
+      {
+        :encryption => {
+          :method => :simple_tls,
+        }
+      } : {})
+
+    return ldap_config
   end
 end

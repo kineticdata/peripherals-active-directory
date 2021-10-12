@@ -9,9 +9,8 @@
     'enable_debug_logging' => "Yes"
   },
   'parameters' => {
-	'error_handling'	   	=> "Error Message",
-	'search_value'		   	=> "TestGroup",
-	'include_nested_groups' => "false",
-	'user_attribute'		=> "samaccountname"
+    'search_by' => 'Email Address',
+    'search_value' => 'foo.bar@acme.com'
   }
 }
+

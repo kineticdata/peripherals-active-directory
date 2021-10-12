@@ -3,13 +3,14 @@
     'host' => "",
     'username' => "",
     'password' => "",
-    'port' => "389",
+    'tls' => "True",
+    'port' => "636",
     'base' => "",
     'enable_debug_logging' => "Yes"
   },
   'parameters' => {
     'search_by' => 'User Logon',
-    'search_value' => 'kte.testuser2',
+    'search_value' => 'kte.testuser',
     'groups' => 'TestGroup'
   }
 }

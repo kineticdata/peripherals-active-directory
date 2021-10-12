@@ -1,14 +1,15 @@
 {
   'info' => {
-    'host'     => "",
+    'host' => "",
     'username' => "",
     'password' => "",
-    'port'     => "389",
-    'base'     => "",
+    'tls' => "True",
+    'port' => "",
+    'base' => "DC=kineticdata,DC=com",
     'enable_debug_logging' => "Yes"
   },
   'parameters' => {
-    'search_by'    => "",
-    'search_value' => ""
+    'search_by'    => "Full Name",
+    'search_value' => "KTE Test User"
   }
 }

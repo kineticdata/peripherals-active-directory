@@ -15,6 +15,7 @@ with a default value of 'Demo' add the following line:
 
 <taskInfo version="1.0">
   <info name="host" description="The active directory server name or IP address."></info>
+  <info name="tls" description="Specifies if encryption should be enabled. Valid Inputs: True or False">False</info>
   <info name="port" description="The active directory server port.  Defaults to '389'.">389</info>
   <info name="base" description="A default LDAP treebase for User and Group queries against the host.  Example: 'DC=kineticdata,DC=com'."></info>
   <info name="username" description="The distinguised name of the user that will interact with the active directory server.  Example: 'CN=Administrator,CN=Users,DC=kineticdata,DC=com'"></info>
