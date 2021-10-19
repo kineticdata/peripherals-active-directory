@@ -7,8 +7,12 @@ Active Directory User Disable V2 (2014-08-05)
 Active Directory User Disable V3 (2019-10-04)
 * Changed ldap lib version from 0.1.1 to 0.12.0.
 
-(2019-10-10)
+Active Directory User Disable V3 (2019-10-10)
 * Added Never Drop Never Fail
 
-(2020-06-26)
+Active Directory User Disable V3 (2020-06-26)
 * updated version number in node.xml and init.rb
+
+Active Directory User Disable V3 (2021-10-08)
+* Added TLS option to allow the handler the ability to do secure connections.
+* Update file type of changelog and readme.

@@ -1,28 +1,32 @@
-== Active Directory User Change Attribute
+# Active Directory User Change Attribute
 Finds a user in active directory by Distinguished Name, Full Name, Email Address, or User Name
 and changes the specified LDAP attribute.
 
 
-=== Parameters
+## Parameters
 [Error Handling] 
-    How to handle error conditions in the handler: raise the error, or return error message
+    How to handle error conditions in the handler: raise the error, or return error message.
+
 [Search By]
     'Distinguished Name', 'Full Name', 'User Logon', or 'Email Address'
+
 [Search Value]
     The value of the Distinguished Name, Full Name, User Logon, or Email
     Address to search for
 
-==== Sample Configuration
+### Sample Configuration
 Search By::                             User Logon
+
 Search Value::                          <%=@answers['ReqFor Login ID']%>
+
 LDAP attribute::                        mobile
+
 New attribute value::                   555-555-5555
 
-=== Results
-Handler Error Message::     Error message if an error was encountered and 
-                            Error Handling is set to "Error Message".
+## Results
+Handler Error Message::     Error message if an error was encountered and Error Handling is set to "Error Message".
 
-=== Detailed Description
+## Detailed Description
 This handler will use the server information and user credentials configured in
 the task info values to authenticate and connect to the specified Active
 Directory server (using LDAP) and search for the user based on the
@@ -46,6 +50,10 @@ Finally, the handler changes the specified LDAP attribute to the new value.
 This handler will fail if the user is not found, or if more than one
 result is found.
 
-=== Important Note
-This handler has been tested on Task 4.0.6 and should preform as expected on
-all Task 4.x.x versions.
+## Important Notes
+* This handler has been tested on Task 5.0.8 and should preform as expected on
+all Task 5.x.x versions.
+* The handler supports LDAPS by setting the tls info value to 'True'.
+  * The method used to establish LDAPS is simple tls.  The method encrypts all communications with the LDAP server.
+  * The handler completely establishes SSL/TLS encryption with the LDAP server before any LDAP-protocol data is exchanged. There is no plaintext negotiation and no special encryption-request controls are sent to the server.
+  * The simple tls method intended for cases where you have an implicit level of trust in the authenticity of the LDAP server. No validation of the LDAP server's SSL certificate is performed. This means that the handler will not produce errors if the LDAP server's encryption certificate is not signed by a well-known Certification Authority.

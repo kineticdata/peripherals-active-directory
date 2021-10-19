@@ -1,20 +1,21 @@
 {
   'info' => {
-    'host' => "",
-    'username' => "",
-    'password' => "",
-    'port' => "389",
-    'base' => "",
-    'dn_format'            => '',
-    'enable_debug_logging' => ""
+    'host'                  => "",
+    'username'              => "",
+    'password'              => "",
+    'tls'                   => "True",
+    'port'                  => "636",
+    'base'                  => "",  
+    'dn_format'             => 'CN={name},{base}',
+    'enable_debug_logging'  => "Yes"
   },
   'parameters' => {
-    'name'        => "TestComputerGroup2",
+    'name'        => "TestComputerGroup1",
     'description' => "Test",
     'email'       => "tcg2@company.com",
     'scope'       => "Domain local",
     'type'        => "Distribution",
-    'info'        => "I like turtles"
+    'info'        => "I like TMNT"
   }
 }
 

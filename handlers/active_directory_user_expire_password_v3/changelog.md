@@ -10,5 +10,9 @@ Active Directory User Expire Password V3 (2019-10-01)
 Active Directory User Expire Password V3 (2019-10-10)
 * Added Never Drop Never Fail
 
-(2020-06-26)
+Active Directory User Expire Password V3 (2020-06-26)
 * updated version number in node.xml and init.rb
+
+Active Directory User Expire Password V3 (2021-10-08)
+* Added TLS option to allow the handler the ability to do secure connections.
+* Update file type of changelog and readme.

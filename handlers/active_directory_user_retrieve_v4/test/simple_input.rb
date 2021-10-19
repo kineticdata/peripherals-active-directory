@@ -9,9 +9,8 @@
     'enable_debug_logging' => "Yes"
   },
   'parameters' => {
-    'search_by'    => "Full Name",
-    'search_value' => "KTE Test User",
-    'ldap_attribute' => "",
-    'new_value' => ""
+    'user_logon' => 'kte.testuser',
+    'search_by'=> 'Full Name',
+    'search_value' => 'KTE Test User',
   }
 }

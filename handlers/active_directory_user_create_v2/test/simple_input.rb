@@ -3,23 +3,24 @@
     'host' => "",
     'username' => "",
     'password' => "",
-    'port' => '',
-    'base' => '',
-    'dn_format' => '',
-    'enable_debug_logging' => 'Yes'
+    'tls' => "True",
+    'port' => "636",
+    'base' => "",
+    'dn_format' => 'cn={displayname},CN=Users,{base}',
+    'enable_debug_logging' => "Yes"
   },
   'parameters' => {
-    'user_logon' => 'kte.testuser@domain.com',
+    'user_logon' => 'kte.testuser2',
     'first_name'=> 'KTE',
     'last_name' => 'Test User',
-    'full_name' => 'KTE Test User',
-    'email' => 'kte.testuser@domain.com',
-    'description' => 'Test Account',
-    'office' => 'A2 4th Floor',
-    'telephone' => '555-555-5555',
-    'title' => 'Project Manager',
-    'department' => 'Processing and Exchange',
-    'company' => 'Kinetic Data',
-    'activated' => 'No'
+    'full_name' => 'KTE Test User 2',
+    'email' => 'kte.testuser2@domain.com',
+    'description' => '',
+    'office' => '',
+    'telephone' => '',
+    'title' => '',
+    'department' => '',
+    'company' => '',
+    'activated' => 'Yes'
   }
 }

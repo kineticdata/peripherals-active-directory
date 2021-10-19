@@ -13,5 +13,9 @@ Active Directory User Retrieve V4 (2019-10-07)
 Active Directory User Retrieve V4 (2019-10-10)
 * Added Never Drop Never Fail
 
-(2020-06-26)
+Active Directory User Retrieve V4 (2020-06-26)
 * updated version number in node.xml and init.rb
+
+Active Directory User Retrieve V4 (2021-10-08)
+* Added TLS option to allow the handler the ability to do secure connections.
+* Update file type of changelog and readme.

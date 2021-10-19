@@ -38,30 +38,24 @@ class ActiveDirectoryGroupCreateV3
 
     # Retrieve the credentials and configuration values supplied by the task
     # info items.
-    info_values = {}
+    @info_values = {}
     REXML::XPath.each(input_document,"/handler/infos/info") { |item|
-      info_values[item.attributes['name']] = item.text
+      @info_values[item.attributes['name']] = item.text
     }
 
     # Determine if debug logging is enabled.
-    @debug_logging_enabled = info_values['enable_debug_logging'] == 'Yes'
+    @debug_logging_enabled = @info_values['enable_debug_logging'] == 'Yes'
     if @debug_logging_enabled
       puts("Debug Logging Enabled...")
-      puts("Connecting to #{info_values['host']}:#{info_values['port']} as #{info_values['username']}.")
-      puts("Using #{info_values['base']} for the base of the directory tree.")
-      puts("Using #{info_values['dn_format']} for the 'Group' distinguished name template.")
+      puts("Connecting to #{@info_values['host']}:#{@info_values['port']} as #{@info_values['username']}.")
+      puts("Using #{@info_values['base']} for the base of the directory tree.")
+      puts("Using #{@info_values['dn_format']} for the 'Group' distinguished name template.")
     end
 
     # Initialize the LDAP object that will be used to interact with the active
     # directory server.
     @ldap = Net::LDAP.new(
-      :host => info_values['host'],
-      :port => info_values['port'],
-      :auth => {
-        :method => :simple,
-        :username => info_values['username'],
-        :password => info_values['password']
-      }
+      get_ldap_config()
     )
 
     # Store the parameters specified in the node.xml as a hash attribute named @parameters.
@@ -93,7 +87,7 @@ class ActiveDirectoryGroupCreateV3
     # Build the distinguished name for this group based on the info format.  The
     # dn format template allows variables from @attributes (entry attributes) or
     # info_values (task info values) to be used.
-    @dn = insert_values(info_values['dn_format'], @attributes.merge(info_values))
+    @dn = insert_values(@info_values['dn_format'], @attributes.merge(@info_values))
     puts("Set distinguished name to: #{@dn}") if @debug_logging_enabled
   end
 
@@ -244,5 +238,28 @@ class ActiveDirectoryGroupCreateV3
       # name matching the string between the innermost left and right braces.
       $1 == "\\{" ? "{" : template_variables[$2]
     end
+  end
+
+  def get_ldap_config()
+    # Determine if TLS should be applied.
+    is_tls = @info_values['tls'] == 'True'
+  
+    puts "TLS is #{is_tls ? 'enabled' : 'disabled'}, making connection on port #{@info_values['port']}" if @debug_logging_enabled
+  
+    # Initialize the Net::LDAP object with the credentials
+    ldap_config = {
+      :host => @info_values['host'],
+      :port => @info_values['port'],
+      :auth => {
+        :method => :simple,
+        :username => @info_values['username'],
+        :password => @info_values['password']
+      }
+    }
+    # Add encryption if using TLS
+    ldap_config[:encryption] = { :method => :simple_tls } if is_tls
+  
+    # Return the ldap configuration
+    ldap_config
   end
 end

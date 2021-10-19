@@ -37,16 +37,8 @@ class ActiveDirectoryUserRetrieveV4
       puts("Using #{@info_values['base']} for the base of the directory tree.")
     end
 
-    # Initialize the Net::LDAP object with the credentials - have to use
-    # encryption since we are sending a password
     @ldap = Net::LDAP.new(
-      :host => @info_values['host'],
-      :port => @info_values['port'],
-      :auth => {
-        :method => :simple,
-        :username => @info_values['username'],
-        :password => @info_values['password']
-      }
+      get_ldap_config()
     )
 
     # Store parameters in the node.xml in a hash attribute named @parameters.
@@ -236,4 +228,26 @@ class ActiveDirectoryUserRetrieveV4
   # This is a ruby constant that is used by the escape method
   ESCAPE_CHARACTERS = {'&'=>'&amp;', '>'=>'&gt;', '<'=>'&lt;', '"' => '&quot;'}
 
+  def get_ldap_config()
+    # Determine if TLS should be applied.
+    is_tls = @info_values['tls'] == 'True'
+  
+    puts "TLS is #{is_tls ? 'enabled' : 'disabled'}, making connection on port #{@info_values['port']}" if @debug_logging_enabled
+  
+    # Initialize the Net::LDAP object with the credentials
+    ldap_config = {
+      :host => @info_values['host'],
+      :port => @info_values['port'],
+      :auth => {
+        :method => :simple,
+        :username => @info_values['username'],
+        :password => @info_values['password']
+      }
+    }
+    # Add encryption if using TLS
+    ldap_config[:encryption] = { :method => :simple_tls } if is_tls
+  
+    # Return the ldap configuration
+    ldap_config
+  end
 end
