@@ -9,3 +9,7 @@ Active Directory User Remove Groups V3 (2019-10-01)
 
 Active Directory User Remove Groups V3 (2019-10-10)
 * Added Never Drop Never Fail
+
+Active Directory User Remove Groups V3 (2021-10-08)
+* Added TLS option to allow the handler the ability to do secure connections.
+* Update file type of changelog and readme.

@@ -22,6 +22,7 @@
     <handler name="active_directory_user_temporal_password" version="3">
         <infos>
             <info name='host'>&lt;%=@info['host']%&gt;</info>
+            <info name='tls'>&lt;%=@info['tls']%&gt;</info>
             <info name='port'>&lt;%=@info['port']%&gt;</info>
             <info name='base'>&lt;%=@info['base']%&gt;</info>
             <info name='username'>&lt;%=@info['username']%&gt;</info>
