@@ -130,4 +130,9 @@ Active Directory \[handlers\] (2021-10-12)
   * \[active_directory_user_temporal_password_v3\]
     * KP-3456 Added support for LDAPS
     * Updated readme and changelog file types to markdown
-  
+
+Active Directory \[handlers\] (2021-11-02)
+  * \[active_directory_group_add_groups_v1\]
+    * Initial add
+    * KP-3456 Added support for LDAPS
+    * Updated readme and changelog file types to markdown  
